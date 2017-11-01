@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -13,13 +14,35 @@
         <h1 id="catName">%data%</h1>
         <img  id="catPicture" class="cat">
         <h2 id="numbersTV">Number of clicks</h2>
+        </div>        
+        
+        
+        <div class="listContainer">
+            <ul id="catList" class=".list"></ul>            
+           <div class="adminComatiner">
+            <button type="button" id="adminButton">Admin</button>
+                    <form id="infoEditor">
+                        Cat Name: <input id="catNameIP" type="text" name="Cat Name"><br>
+                        Image Url: <input id="catImageIP" type="text" name="Cat Image"><br>
+                        
+                        <button type="button" id="saveButton">Save</button> 
+                        <button type="button" id="discardButton">Discard</button>
+
+                     </form>
+           </div>    
+
+
         </div>
-            
-         <ul id="catList" class=".list"></ul>
+    
+
     </div>
+
+
+
 
     <script  src="js/libs/jquery.min.js"></script>
     <script  src="js/helper.js"></script>
     <script  src="js/script.js"></script>
 
 </body>
+</html>

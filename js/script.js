@@ -1,19 +1,3 @@
-
-
-var position=0;
-
-
-$('#cat1').click(function(e) {
-    //the element has been clicked... do stuff here
-    console.log("Number is "+position)
-
-    catData.cat[position].clicks=catData.cat[position].clicks+1;
-
-    $("#numbersTV").text(catData.cat[position].clicks);
-
-  });
-
-
 var catData=
 {
   currentCat:null,
@@ -33,13 +17,13 @@ var catData=
 },{
 
   name:'Awesome',
-  picture:'images/pic.jpg'  ,
+  picture:'images/pic2.jpg'  ,
   clicks:0
  
 },  
   {
     name:'Jesus',
-    picture:'images/pic.jpg',
+    picture:'images/pic3.jpg',
     clicks:0
    
   },
@@ -57,6 +41,8 @@ var catData=
 
 var octopus=
 {
+  "isVisible":"false"
+  ,
   init:function()
   {
 
@@ -64,8 +50,9 @@ var octopus=
 
     catView.init();
     listView.init();
+    adminView.init();
   },
-  getCurrentCat()
+  getCurrentCat:function()
   {
 
     return catData.currentCat;
@@ -80,16 +67,39 @@ var octopus=
     return catData.cat;
   }
   ,
-  incrementCatCounter()
+  incrementCatCounter:function()
+  {
+    catData.currentCat.clicks++;
+    catView.render();
+  },
+  showHide:function()
   {
 
-    catData.currentCat.click++;
-    catView.render();
+    if(octopus.isVisible)
+    {
+      adminView.inputFieldForm.style.visibility='hidden'
+      
+      octopus.isVisible=false
+    }
+    else
+    {
+      adminView.inputFieldForm.style.visibility='visible'
+      
+      octopus.isVisible=true
+    }
+   
+
 
   }
 
 
 };
+
+
+/*
+Views are mentioned below
+*/
+
 
 
 
@@ -102,20 +112,24 @@ this.catElem= $("#catName");
 this.catPictureElem=$("#catPicture");
 this.catCountElem=$("#numbersTV");
 
+
+this.catPictureElem.on('click',function()
+{
+  octopus.incrementCatCounter();
+});
+
 catView.render();
 }
 ,
 render:function()
 {
 
+
   var currentCat=octopus.getCurrentCat();
 
   this.catElem.text(currentCat.name);
   this.catPictureElem.attr('src',currentCat.picture);
-  this.catCountElem.text(currentCat.click);
-  
-  
- 
+  this.catCountElem.text(currentCat.clicks);
 }
 
 };
@@ -137,6 +151,8 @@ var listView=
 
     cats=octopus.getCats();
 
+    this.catList.innerHTML = '';
+
     cats.forEach(function(cat) {
 
       elem=document.createElement('li')
@@ -149,6 +165,7 @@ var listView=
           {
               octopus.setCurrentCat(catCopy);
               catView.render();
+              adminView.render();
           }
 
       })(cat))
@@ -160,33 +177,106 @@ var listView=
 
 
 
-
-
-
-function SetValues()
+var adminView=
 {
- 
-    var catsArray=catData.cat;
-  
-    for(var i=0;i<catsArray.length;i++)
+
+  init:function()
+  {
+    var AdminPanelBtn=$("#adminButton");
+
+
+
+    this.inputFieldForm=document.getElementById("infoEditor");
+
+    this.catNameIp=document.getElementById("catNameIP");
+    this.catImageIp=document.getElementById("catImageIP");
+
+    var saveIP=$("#saveButton");
+    var discardIP=$("#discardButton");
+
+    
+    AdminPanelBtn.on('click',function()
+    {    
+      octopus.showHide();
+    });
+
+    saveIP.on('click',function()
     {
-      var currentCat=catsArray[i];
-      var currentLI=HTMLcatListItem.replace("%data%",currentCat.name);
-      $("#catList").append(currentLI);
-  
-    }
-  
-}
+      var catData=octopus.getCurrentCat();
+      catData.name=adminView.catNameIp.value;
+      catData.picture=adminView.catImageIp.value;
+
+      listView.render();
+      View.render();
+      octopus.showHide();
+
+    });
+
+    discardIP.on('click',function()
+    {
+      octopus.showHide();
+    });
+    
+   
+    adminView.render();
+    octopus.showHide();
+    
+  }
+  ,
+  render:function()
+  {
+    var cat=octopus.getCurrentCat();
+    this.catNameIp.value=cat.name;
+    this.catImageIp.value=cat.picture;
+
+  }
 
 
-$(document).on("click", "#catList li", function(){
-  console.log("index is:" ,  $(this).index() );
-  $("#catName").text(catData.cat[$(this).index()].name);
-  position=$(this).index()
-  $("#catPicture").attr("src", catData.cat[$(this).index()].picture);
-  $("#numbersTV").text(catData.cat[$(this).index()].clicks);
-  
-})
+
+
+
+};
 
 
 octopus.init();
+
+
+
+// function SetValues()
+// {
+ 
+//     var catsArray=catData.cat;
+  
+//     for(var i=0;i<catsArray.length;i++)
+//     {
+//       var currentCat=catsArray[i];
+//       var currentLI=HTMLcatListItem.replace("%data%",currentCat.name);
+//       $("#catList").append(currentLI);
+  
+//     }
+  
+// }
+
+
+// $(document).on("click", "#catList li", function(){
+//   console.log("index is:" ,  $(this).index() );
+//   $("#catName").text(catData.cat[$(this).index()].name);
+//   position=$(this).index()
+//   $("#catPicture").attr("src", catData.cat[$(this).index()].picture);
+//   $("#numbersTV").text(catData.cat[$(this).index()].clicks);
+  
+// })
+
+// var position=0;
+
+
+// $('#cat1').click(function(e) {
+//     //the element has been clicked... do stuff here
+//     console.log("Number is "+position)
+
+//     catData.cat[position].clicks=catData.cat[position].clicks+1;
+
+//     $("#numbersTV").text(catData.cat[position].clicks);
+
+//   });
+
