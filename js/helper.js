@@ -1,2 +1,3 @@
 
-var HTMLcatListItem = '<li>%data%</li>';
+var HTMLListItemName = '<li id="catName">%data%</li>';
+

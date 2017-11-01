@@ -1,5 +1,17 @@
 
 
+var position=0;
+
+
+$('#cat1').click(function(e) {
+    //the element has been clicked... do stuff here
+    console.log("Number is "+position)
+
+    catData.cat[position].clicks=catData.cat[position].clicks+1;
+
+    $("#numbersTV").text(catData.cat[position].clicks);
+
+  });
 
 
 var catData=
@@ -21,19 +33,19 @@ var catData=
 },{
 
   name:'Awesome',
-  picture:'images/pic2.jpg'  ,
+  picture:'images/pic.jpg'  ,
   clicks:0
  
 },  
   {
     name:'Jesus',
-    picture:'images/pic1.jpg',
+    picture:'images/pic.jpg',
     clicks:0
    
   },
   {
       name:'Cool',
-      picture:'images/pic2.jpg',
+      picture:'images/pic.jpg',
       clicks:0
      
   }
@@ -52,8 +64,6 @@ var octopus=
 
     catView.init();
     listView.init();
-
-
   },
   getCurrentCat()
   {
@@ -132,17 +142,18 @@ var listView=
       elem=document.createElement('li')
       elem.textContent=cat.name
 
-      
-      elem.addEventListener('click', (function(catCopy) {
-        return function() {
-        octopus.setCurrentCat(catCopy);
-        catView.render();
-        };
-       })(cat));
+      elem.addEventListener('click',(function(catCopy)
+      {
 
+          return function()
+          {
+              octopus.setCurrentCat(catCopy);
+              catView.render();
+          }
+
+      })(cat))
       this.catList.append(elem);
     }, this);
-
   }
 
 };
@@ -152,44 +163,30 @@ var listView=
 
 
 
-// function SetValues()
-// {
+function SetValues()
+{
  
-//     var catsArray=catData.cat;
+    var catsArray=catData.cat;
   
-//     for(var i=0;i<catsArray.length;i++)
-//     {
-//       var currentCat=catsArray[i];
-//       var currentLI=HTMLcatListItem.replace("%data%",currentCat.name);
-//       $("#catList").append(currentLI);
+    for(var i=0;i<catsArray.length;i++)
+    {
+      var currentCat=catsArray[i];
+      var currentLI=HTMLcatListItem.replace("%data%",currentCat.name);
+      $("#catList").append(currentLI);
   
-//     }
+    }
   
-// }
+}
 
 
-// $(document).on("click", "#catList li", function(){
-//   console.log("index is:" ,  $(this).index() );
-//   $("#catName").text(catData.cat[$(this).index()].name);
-//   position=$(this).index()
-//   $("#catPicture").attr("src", catData.cat[$(this).index()].picture);
-//   $("#numbersTV").text(catData.cat[$(this).index()].clicks);
+$(document).on("click", "#catList li", function(){
+  console.log("index is:" ,  $(this).index() );
+  $("#catName").text(catData.cat[$(this).index()].name);
+  position=$(this).index()
+  $("#catPicture").attr("src", catData.cat[$(this).index()].picture);
+  $("#numbersTV").text(catData.cat[$(this).index()].clicks);
   
-// })
-
-
-// var position=0;
-
-
-// $('#cat1').click(function(e) {
-//     //the element has been clicked... do stuff here
-//     console.log("Number is "+position)
-
-//     catData.cat[position].clicks=catData.cat[position].clicks+1;
-
-//     $("#numbersTV").text(catData.cat[position].clicks);
-
-//   });
+})
 
 
 octopus.init();

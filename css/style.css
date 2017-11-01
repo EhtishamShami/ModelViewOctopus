@@ -1,4 +1,4 @@
-* {box-sizing:border-box;}
+
 body {background-color: #CCC;}
 
 .imageContainer
@@ -23,5 +23,23 @@ body {background-color: #CCC;}
 .cat
 {
     width:100%;
-    
+}
+#container
+{
+    width: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+    margin: 0 auto;
+    text-align:center;
+}
+
+#catDetails
+{
+    width: 50%;
+}
+#catImage
+{
+    width: 100%;
 }
